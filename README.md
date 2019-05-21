@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-CC0--1.0-blue.svg)](https://github.com/30-seconds/30-seconds-of-code/blob/master/LICENSE) [![npm Downloads](https://img.shields.io/npm/dt/30-seconds-of-code.svg)](https://www.npmjs.com/package/30-seconds-of-code) [![npm Version](https://img.shields.io/npm/v/30-seconds-of-code.svg)](https://www.npmjs.com/package/30-seconds-of-code) [![Known Vulnerabilities](https://snyk.io/test/github/30-seconds/30-seconds-of-code/badge.svg?targetFile=package.json)](https://snyk.io/test/github/30-seconds/30-seconds-of-code?targetFile=package.json) <br/> 
 [![Travis Build](https://travis-ci.com/30-seconds/30-seconds-of-code.svg?branch=master)](https://travis-ci.com/30-seconds/30-seconds-of-code) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6ab7791fb1ea40b4a576d658fb96807f)](https://www.codacy.com/app/Chalarangelo/30-seconds-of-code?utm_source=github.com&utm_medium=referral&utm_content=30-seconds/30-seconds-of-code&utm_campaign=Badge_Grade) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg)](https://github.com/Flet/semistandard) <br/>
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![ProductHunt](https://img.shields.io/badge/producthunt-vote-orange.svg)](https://www.producthunt.com/posts/30-seconds-of-code) [![Gitter chat](https://img.shields.io/badge/chat-on%20gitter-4FB999.svg)](https://gitter.im/30-seconds-of-code/Lobby) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Awesome](https://awesome.re/badge.svg)](https://awesome.re) [![ProductHunt](https://img.shields.io/badge/producthunt-vote-orange.svg)](https://www.producthunt.com/posts/30-seconds-of-code) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 > Curated collection of useful JavaScript snippets that you can understand in 30 seconds or less.
 
@@ -207,6 +207,7 @@ _30s.average(1, 2, 3);
 * [`detectDeviceType`](#detectdevicetype)
 * [`elementContains`](#elementcontains)
 * [`elementIsVisibleInViewport`](#elementisvisibleinviewport-)
+* [`formToObject`](#formtoobject)
 * [`getImages`](#getimages)
 * [`getScrollPosition`](#getscrollposition)
 * [`getStyle`](#getstyle)
@@ -227,6 +228,7 @@ _30s.average(1, 2, 3);
 * [`redirect`](#redirect)
 * [`runAsync`](#runasync-)
 * [`scrollToTop`](#scrolltotop)
+* [`serializeForm`](#serializeform)
 * [`setStyle`](#setstyle)
 * [`show`](#show)
 * [`smoothScroll`](#smoothscroll)
@@ -264,6 +266,7 @@ _30s.average(1, 2, 3);
 * [`bind`](#bind)
 * [`bindKey`](#bindkey)
 * [`chainAsync`](#chainasync)
+* [`checkProp`](#checkprop)
 * [`compose`](#compose)
 * [`composeRight`](#composeright)
 * [`converge`](#converge)
@@ -314,6 +317,7 @@ _30s.average(1, 2, 3);
 * [`isPrime`](#isprime)
 * [`lcm`](#lcm)
 * [`luhnCheck`](#luhncheck-)
+* [`mapNumRange`](#mapnumrange)
 * [`maxBy`](#maxby)
 * [`median`](#median)
 * [`midpoint`](#midpoint)
@@ -332,6 +336,7 @@ _30s.average(1, 2, 3);
 * [`sumBy`](#sumby)
 * [`sumPower`](#sumpower)
 * [`toSafeInteger`](#tosafeinteger)
+* [`vectorDistance`](#vectordistance)
 
 </details>
 
@@ -668,7 +673,6 @@ const pipeAsyncFunctions = (...fns) => arg => fns.reduce((p, f) => p.then(f), Pr
 <summary>Examples</summary>
 
 ```js
-
 const sum = pipeAsyncFunctions(
   x => x + 1,
   x => new Promise(resolve => setTimeout(() => resolve(x + 2), 1000)),
@@ -890,7 +894,9 @@ Omit the second argument, `delimiter`, to use a default delimiter of `,`.
 
 ```js
 const arrayToCSV = (arr, delimiter = ',') =>
-  arr.map(v => v.map(x => `"${x}"`).join(delimiter)).join('\n');
+  arr
+    .map(v => v.map(x => (isNaN(x) ? `"${x.replace(/"/g, '""')}"` : x)).join(delimiter))
+    .join('\n');
 ```
 
 <details>
@@ -899,6 +905,7 @@ const arrayToCSV = (arr, delimiter = ',') =>
 ```js
 arrayToCSV([['a', 'b'], ['c', 'd']]); // '"a","b"\n"c","d"'
 arrayToCSV([['a', 'b'], ['c', 'd']], ';'); // '"a";"b"\n"c";"d"'
+arrayToCSV([['a', '"b" great'], ['c', 3.1415]]); // '"a","""b"" great"\n"c",3.1415'
 ```
 
 </details>
@@ -1095,12 +1102,12 @@ difference([1, 2, 3], [1, 2, 4]); // [3]
 
 Returns the difference between two arrays, after applying the provided function to each array element of both.
 
-Create a `Set` by applying `fn` to each element in `b`, then use `Array.prototype.filter()` in combination with `fn` on `a` to only keep values not contained in the previously created set.
+Create a `Set` by applying `fn` to each element in `b`, then use `Array.prototype.map()` to apply `fn` to each element in `a`, then `Array.prototype.filter()`
 
 ```js
 const differenceBy = (a, b, fn) => {
   const s = new Set(b.map(fn));
-  return a.filter(x => !s.has(fn(x)));
+  return a.map(fn).filter(el => !s.has(el));
 };
 ```
 
@@ -1108,8 +1115,8 @@ const differenceBy = (a, b, fn) => {
 <summary>Examples</summary>
 
 ```js
-differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor); // [1.2]
-differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], v => v.x); // [ { x: 2 } ]
+differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor); // [1]
+differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], v => v.x); // [2]
 ```
 
 </details>
@@ -1141,7 +1148,7 @@ differenceWith([1, 1.2, 1.5, 3, 0], [1.9, 3, 0], (a, b) => Math.round(a) === Mat
 
 Returns a new array with `n` elements removed from the left.
 
-Use `Array.prototype.slice()` to slice the remove the specified number of elements from the left.
+Use `Array.prototype.slice()` to remove the specified number of elements from the left.
 
 ```js
 const drop = (arr, n = 1) => arr.slice(n);
@@ -1164,7 +1171,7 @@ drop([1, 2, 3], 42); // []
 
 Returns a new array with `n` elements removed from the right.
 
-Use `Array.prototype.slice()` to slice the remove the specified number of elements from the right.
+Use `Array.prototype.slice()` to remove the specified number of elements from the right.
 
 ```js
 const dropRight = (arr, n = 1) => arr.slice(0, -n);
@@ -2317,7 +2324,6 @@ Use `Array.prototype.filter()` to find array elements that return truthy values 
 The `func` is invoked with three arguments (`value, index, array`).
 
 ```js
-
 const remove = (arr, func) =>
   Array.isArray(arr)
     ? arr.filter(func).reduce((acc, val) => {
@@ -2936,7 +2942,7 @@ uniqueElements([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
 
 Returns all unique values of an array, based on a provided comparator function.
 
-Use `Array.prototype.reduce()` and `Array.prototype.some()` for an array containing only the first unique occurence of each value, based on the comparator function, `fn`.
+Use `Array.prototype.reduce()` and `Array.prototype.some()` for an array containing only the first unique occurrence of each value, based on the comparator function, `fn`.
 The comparator function takes two arguments: the values of the two elements being compared.
 
 ```js
@@ -2971,7 +2977,7 @@ uniqueElementsBy(
 
 Returns all unique values of an array, based on a provided comparator function.
 
-Use `Array.prototype.reduce()` and `Array.prototype.some()` for an array containing only the last unique occurence of each value, based on the comparator function, `fn`.
+Use `Array.prototype.reduce()` and `Array.prototype.some()` for an array containing only the last unique occurrence of each value, based on the comparator function, `fn`.
 The comparator function takes two arguments: the values of the two elements being compared.
 
 ```js
@@ -3531,6 +3537,35 @@ const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
 // e.g. 100x100 viewport and a 10x10px element at position {top: -1, left: 0, bottom: 9, right: 10}
 elementIsVisibleInViewport(el); // false - (not fully visible)
 elementIsVisibleInViewport(el, true); // true - (partially visible)
+```
+
+</details>
+
+<br>[⬆ Back to top](#contents)
+
+### formToObject
+
+Encode a set of form elements as an `object`.
+
+Use the `FormData` constructor to convert the HTML `form` to `FormData`, `Array.from()` to convert to an array.
+Collect the object from the array, using `Array.prototype.reduce()`.
+
+```js
+const formToObject = form =>
+  Array.from(new FormData(form)).reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [key]: value
+    }),
+    {}
+  );
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+formToObject(document.querySelector('#form')); // { email: 'test@email.com', name: 'Test Name' }
 ```
 
 </details>
@@ -4097,6 +4132,30 @@ scrollToTop();
 
 <br>[⬆ Back to top](#contents)
 
+### serializeForm
+
+Encode a set of form elements as a query string.
+
+Use the `FormData` constructor to convert the HTML `form` to `FormData`, `Array.from()` to convert to an array, passing a map function as the second argument.
+Use `Array.prototype.map()` and `window.encodeURIComponent()` to encode each field's value.
+Use `Array.prototype.join()` with appropriate argumens to produce an appropriate query string.
+
+```js
+const serializeForm = form =>
+  Array.from(new FormData(form), field => field.map(encodeURIComponent).join('=')).join('&');
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+serializeForm(document.querySelector('#form')); // email=test%40email.com&name=Test%20Name
+```
+
+</details>
+
+<br>[⬆ Back to top](#contents)
+
 ### setStyle
 
 Sets the value of a CSS rule for the specified element.
@@ -4511,7 +4570,7 @@ const tomorrow = () => {
 <summary>Examples</summary>
 
 ```js
-tomorrow(); // 2018-10-18 (if current date is 2018-10-18)
+tomorrow(); // 2018-10-19 (if current date is 2018-10-18)
 ```
 
 </details>
@@ -4645,6 +4704,51 @@ chainAsync([
     console.log('2 second');
   }
 ]);
+```
+
+</details>
+
+<br>[⬆ Back to top](#contents)
+
+### checkProp
+
+Given a `predicate` function and a `prop` string, this curried function will then take an `object` to inspect by calling the property and passing it to the predicate.
+
+Summon `prop` on `obj`, pass it to a provided `predicate` function and return a masked boolean.
+
+```js
+const checkProp = (predicate, prop) => obj => !!predicate(obj[prop]);
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+
+
+
+
+
+
+
+
+const lengthIs4 = checkProp(l => l === 4, 'length');
+lengthIs4([]); // false
+lengthIs4([1,2,3,4]); // true
+lengthIs4(new Set([1,2,3,4])); // false (Set uses Size, not length)
+
+const session = { user: {} };
+const validUserSession = checkProps(u => u.active && !u.disabled, 'user');
+
+validUserSession(session); // false
+
+session.user.active = true;
+validUserSession(session); // true
+
+const noLength(l => l === undefined, 'length');
+noLength([]); // false
+noLength({}); // true
+noLength(new Set()); // true
 ```
 
 </details>
@@ -5501,7 +5605,6 @@ Otherwise, return the product of `n` and the factorial of `n - 1`.
 Throws an exception if `n` is a negative number.
 
 ```js
-
 const factorial = n =>
   n < 0
     ? (() => {
@@ -5809,6 +5912,28 @@ luhnCheck(123456789); // false
 
 <br>[⬆ Back to top](#contents)
 
+### mapNumRange
+
+Maps a number from one range to another range.
+
+Returns `num` mapped between `outMin`-`outMax` from `inMin`-`inMax`.
+
+```js
+const mapNumRange = (num, inMin, inMax, outMin, outMax) =>
+  ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+mapNumRange(5, 0, 10, 0, 100); // 50
+```
+
+</details>
+
+<br>[⬆ Back to top](#contents)
+
 ### maxBy
 
 Returns the maximum value of an array, after mapping each element to a value using the provided function.
@@ -5885,7 +6010,7 @@ midpoint([1, 3], [2, 4]); // [1.5, 3.5]
 
 Returns the minimum value of an array, after mapping each element to a value using the provided function.
 
-Use `Array.prototype.map()` to map each element to the value returned by `fn`, `Math.min()` to get the maximum value.
+Use `Array.prototype.map()` to map each element to the value returned by `fn`, `Math.min()` to get the minimum value.
 
 ```js
 const minBy = (arr, fn) => Math.min(...arr.map(typeof fn === 'function' ? fn : val => val[fn]));
@@ -6230,6 +6355,33 @@ const toSafeInteger = num =>
 ```js
 toSafeInteger('3.2'); // 3
 toSafeInteger(Infinity); // 9007199254740991
+```
+
+</details>
+
+<br>[⬆ Back to top](#contents)
+
+### vectorDistance
+
+Returns the distance between two vectors.
+
+Use `Array.prototype.reduce()`, `Math.pow()` and `Math.sqrt()` to calculate the Euclidean distance between two vectors.
+
+```js
+const vectorDistance = (...coords) => {
+  let pointLength = Math.trunc(coords.length / 2);
+  let sum = coords
+    .slice(0, pointLength)
+    .reduce((acc, val, i) => acc + Math.pow(val - coords[pointLength + i], 2), 0);
+  return Math.sqrt(sum);
+};
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+vectorDistance(10, 0, 5, 20, 0, 10); // 11.180339887498949
 ```
 
 </details>
@@ -6756,7 +6908,6 @@ Use `Object.keys(obj)` to iterate over the object's keys.
 Use `Array.prototype.reduce()` to create a new object with the same values and mapped keys using `fn`.
 
 ```js
-
 const deepMapKeys = (obj, f) =>
   Array.isArray(obj)
     ? obj.map(val => deepMapKeys(val, f))
@@ -6836,7 +6987,6 @@ Use the `in` operator to check if `target` exists in `obj`.
 If found, return the value of `obj[target]`, otherwise use `Object.values(obj)` and `Array.prototype.reduce()` to recursively call `dig` on each nested object until the first matching key/value pair is found.
 
 ```js
-
 const dig = (obj, target) =>
   target in obj
     ? obj[target]
@@ -7762,7 +7912,7 @@ capitalizeEveryWord('hello world!'); // 'Hello World!'
 
 Returns a string with whitespaces compacted.
 
-Use `String.prototype.replace()` with a regular expression to replace all occurences of 2 or more whitespace characters with a single space.
+Use `String.prototype.replace()` with a regular expression to replace all occurrences of 2 or more whitespace characters with a single space.
 
 ```js
 const compactWhitespace = str => str.replace(/\s{2,}/g, ' ');
@@ -8686,7 +8836,7 @@ isBoolean(false); // true
 
 ### isEmpty
 
-Returns true if the a value is an empty object, collection, map or set, has no enumerable properties or is any type that is not considered a collection.
+Returns true if the a value is an empty object, collection, has no enumerable properties or is any type that is not considered a collection.
 
 Check if the provided value is `null` or if its `length` is equal to `0`.
 
@@ -8698,8 +8848,6 @@ const isEmpty = val => val == null || !(Object.keys(val) || val).length;
 <summary>Examples</summary>
 
 ```js
-isEmpty(new Map()); // true
-isEmpty(new Set()); // true
 isEmpty([]); // true
 isEmpty({}); // true
 isEmpty(''); // true
@@ -8783,18 +8931,20 @@ isNull(null); // true
 
 Checks if the given argument is a number.
 
-Use `typeof` to check if a value is classified as a number primitive.
+Use `typeof` to check if a value is classified as a number primitive. 
+To safeguard against `NaN`, check if `val === val` (as `NaN` has a `typeof` equal to `number` and is the only value not equal to itself).
 
 ```js
-const isNumber = val => typeof val === 'number';
+const isNumber = val => typeof val === 'number' && val === val;
 ```
 
 <details>
 <summary>Examples</summary>
 
 ```js
-isNumber('1'); // false
 isNumber(1); // true
+isNumber('1'); // false
+isNumber(NaN); // false
 ```
 
 </details>

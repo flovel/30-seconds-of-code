@@ -72,7 +72,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "3508f9a15d8a0b0541d12373b8ea697773434fbfd946bb63fc4f0246e4f193ea"
+        "hash": "f31b6cd3ca1c861f0ffb8c05e164f29b674167a5b33cf0d4014febae4021afd1"
       }
     },
     {
@@ -374,6 +374,22 @@
       }
     },
     {
+      "id": "checkProp",
+      "type": "snippetListing",
+      "attributes": {
+        "tags": [
+          "function",
+          "object",
+          "utility",
+          "beginner"
+        ],
+        "archived": false
+      },
+      "meta": {
+        "hash": "b9a0897aca121af7d0705cace7673c27b22ffab5e67890a3e1859b7f28df2500"
+      }
+    },
+    {
       "id": "chunk",
       "type": "snippetListing",
       "attributes": {
@@ -502,7 +518,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "c1e8ff69ac01f5be0595f6adf8b0df11dd8b8e557beb71f5faefb7a119282780"
+        "hash": "5b9e921377dd14654bb87eb36a35924fe15957ab98c6adbe88c6b187a7cf37ac"
       }
     },
     {
@@ -811,7 +827,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "09451fcad1367841386a0d7ba7362e3492a0b425adb0e64391f24616cbe98ee9"
+        "hash": "e66191a28aba485589b3b06933c13d999962af982b5b7b1b136c10f4d09abd8d"
       }
     },
     {
@@ -911,7 +927,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "92abc752f5d3a659467e3dde7a3890000f4b72d1fdfd66086092494b688506ae"
+        "hash": "01f5f57c5b2663808e733b98e13dfd47d501ab010e681dd49219548816d1a3d0"
       }
     },
     {
@@ -941,7 +957,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "79d1b63d3d85a17b8bc42d14262a929f9c2cc98064da2dae06156724b14652f6"
+        "hash": "828a6f2f3b94cc537ef0ee30c5ebda28fff688fea65030e47d5721831bdb48ce"
       }
     },
     {
@@ -984,7 +1000,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "6ab35042dbb8b16be8ea108cf5029b34ac9fb166ca331ad2ed6a52188f5b0ba3"
+        "hash": "0a1e7cfbab47f1f7f8aee9d413bd14f4b84de7672d2481ca4ad9fa6cc2581948"
       }
     },
     {
@@ -998,7 +1014,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "421ed9a64e720bd3ba5969e067f94a3d0c3f515b9e8af5ed420a9bbce48d75cb"
+        "hash": "cee5b129d807482ad41d47f12f4451471964bb5e8e8059cc32b05ffb62706438"
       }
     },
     {
@@ -1162,7 +1178,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "8b0c9c74e4ec55c27f1341980374c525e7c67b8bc8c6a67668b682c5f8619c0c"
+        "hash": "383ed61e69b8f63ae42d0746a1995057f4f65b4af6ca7778d8f1771144802acd"
       }
     },
     {
@@ -1356,6 +1372,21 @@
       },
       "meta": {
         "hash": "72c557bd9def493e3a138705f5cb66f993228bd7e51b11fa84f85841bc035524"
+      }
+    },
+    {
+      "id": "formToObject",
+      "type": "snippetListing",
+      "attributes": {
+        "tags": [
+          "browser",
+          "object",
+          "intermediate"
+        ],
+        "archived": false
+      },
+      "meta": {
+        "hash": "2bb4becd71bb5d71e6581e9d944fb44cca6c2c6441fe169fbc1b83e8ed48b4a6"
       }
     },
     {
@@ -2184,7 +2215,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "55954fcfb879542225f7d1861ae7de6faac288e28ca857367b6a2eeba9a54786"
+        "hash": "098b40c2316524eb16f88fcc1d1210e4c285b4d3ae069f93bf3dacaccb84b833"
       }
     },
     {
@@ -2286,7 +2317,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "446ed50e100f18a606c8443be196992b74b235ed98646632463fdc3d01f9eb04"
+        "hash": "3da255d35590d5e0c38cc86dc9bcd3d26cb7350b8880d4490649a3152e3fc945"
       }
     },
     {
@@ -2678,6 +2709,20 @@
       }
     },
     {
+      "id": "mapNumRange",
+      "type": "snippetListing",
+      "attributes": {
+        "tags": [
+          "math",
+          "beginner"
+        ],
+        "archived": false
+      },
+      "meta": {
+        "hash": "493eaac4ff025739014196f024923baf63e6eba5317c7b364166f3e7087f5bf1"
+      }
+    },
+    {
       "id": "mapObject",
       "type": "snippetListing",
       "attributes": {
@@ -2889,7 +2934,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "58be8a0dc3e56ec09b0bb927c2c575c033c70ac3a8b612e993fdcbf6d5a99d51"
+        "hash": "bc285c62d2db31d2dd1a45623dab38e57eb85ca9a7cc83bda7ad286b302ec405"
       }
     },
     {
@@ -3377,7 +3422,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "0b04f5fe668888db0dc360535cd999669258019f0682eb6e4ad3a1164e408d13"
+        "hash": "4815876fd6dbb17ad34c0d8918e7a72d837104f9beee7dc51b0fa73057b9e83e"
       }
     },
     {
@@ -3749,7 +3794,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "536833a64ce0c000b82327ed1bb9bcb82e35b237f75aefcca0e0d2def4e9cb63"
+        "hash": "ec9cb9384817f84cf0bacd62a23b69b2304fa2cf0352b16d3950b21d48c04f11"
       }
     },
     {
@@ -3928,6 +3973,21 @@
       },
       "meta": {
         "hash": "a69e2913ccc5c7ca2100de571087a44c14b7ca475154740bace342852357b379"
+      }
+    },
+    {
+      "id": "serializeForm",
+      "type": "snippetListing",
+      "attributes": {
+        "tags": [
+          "browser",
+          "string",
+          "intermediate"
+        ],
+        "archived": false
+      },
+      "meta": {
+        "hash": "2667730d717644182036005fffd041cb6f44173d1dc64e8d75ccf491a66e1ebb"
       }
     },
     {
@@ -4531,7 +4591,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "ab65540435058b1e9dbe3f42bed312ad9095254065f8d711d4211e20fed371a7"
+        "hash": "8ffc5004edab7e91d1af653a07c820c82720dc81ee2233f2c43839c25f58acda"
       }
     },
     {
@@ -4797,7 +4857,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "38bee97eef5e2918ce534d6f25ad2a8b40d4841c7a663d9a9a596dd4687ce5bc"
+        "hash": "f7ac261844dc5146be57a82cdcf7d8dad6990bd4a923eeb8148a6e8b2adabe27"
       }
     },
     {
@@ -4812,7 +4872,7 @@
         "archived": false
       },
       "meta": {
-        "hash": "cec8e5f01c8d00c246a12fabb43713a60da510f50c3d548f703f664936373096"
+        "hash": "c21790120505a25f0f75d92591b5ca248fb40dd0b70438fee5ecfa22d4a61399"
       }
     },
     {
@@ -4935,6 +4995,20 @@
       },
       "meta": {
         "hash": "8fb993b0cf78fa83a170aca132bf5eb13430e2cef5ae06f85b9763f286bb792c"
+      }
+    },
+    {
+      "id": "vectorDistance",
+      "type": "snippetListing",
+      "attributes": {
+        "tags": [
+          "math",
+          "beginner"
+        ],
+        "archived": false
+      },
+      "meta": {
+        "hash": "03d98fe59bf128d50085af5f2948009b08f53f53f72f2bff7421c34f70287b63"
       }
     },
     {
@@ -5249,7 +5323,7 @@
         "archived": true
       },
       "meta": {
-        "hash": "3cc34a842404de0aea2752a6b1398b8a0825cb1a359ff36ab5275f7d15eff107"
+        "hash": "367a5087f8147bb01f2968132ae45dfc5c708c52398ae805292025315d1c7844"
       }
     },
     {
@@ -5293,7 +5367,7 @@
         "archived": true
       },
       "meta": {
-        "hash": "7af37e0984b5c8bd78d6b224cdc155f8c2bf687e38b5cfee27f32c7c29dcddf5"
+        "hash": "ac13cf4ff52357534c814d458895d6a70a5193a552398f9cac7f86016a5e6544"
       }
     },
     {
